@@ -1,0 +1,12 @@
+input[type="text"] {
+    width: 90%;
+    margin-top: 10px;
+    padding-left: 8px;
+    margin-left: 19px;
+}
+.form-inine {
+    margin-left: 12px;
+}
+input#search {
+    margin-right: 4px;
+}
