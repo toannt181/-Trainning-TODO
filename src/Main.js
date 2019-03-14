@@ -64,15 +64,13 @@ class Main extends Component {
 
   onHandleCheckbox = item => {
     let { todoList } = this.state;
-    let index = todoList.indexOf(item);
-    let newTodoList = [
-      ...todoList.slice(0, index),
-      {
-        ...item,
-        isCompleted: !item.isCompleted
-      },
-      ...todoList.slice(index + 1)
-    ];
+    let newTodoList = todoList.map(todoItem => {
+      if (todoItem.id !== item.id) return todoItem;
+      return {
+        ...todoItem,
+        isCompleted: !todoItem.isCompleted
+      };
+    });
     this.setState({
       todoList: newTodoList
     });
@@ -80,13 +78,15 @@ class Main extends Component {
   };
 
   onHandleSearch = event => {
-    const { value } = event.target;
-    if (event.target.type === "checkbox") {
+    const { value, type, checked } = event.target;
+    if (type === "checkbox") {
       this.setState({
-        isShowCompleted: event.target.checked
+        isShowCompleted: checked
       });
     } else {
-      alert('N/A');
+      this.setState({
+        searchValue: value
+      });
     }
   };
   render() {
@@ -94,18 +94,47 @@ class Main extends Component {
 
     return (
       <main className="todo-list">
-        <Search onHandleSearch={this.onHandleSearch} searchValue={searchValue} />
-        {todoList.map(item => {
-          if (isShowCompleted && !item.isCompleted) return undefined;
-            return (
-              <TodoItem
+        <Search
+          onHandleSearch={this.onHandleSearch}
+          searchValue={searchValue}
+        />
+        {!searchValue  // If search input value is empty, show all todos
+          ? todoList.map(item => {
+              if (isShowCompleted && !item.isCompleted) return undefined;
+              return (
+                <TodoItem
                   key={item.id}
                   item={item}
                   onHandleCheckbox={this.onHandleCheckbox}
-                 />
-            )
-          })}
-        
+                />
+              );
+            })
+          : searchValue && isShowCompleted
+          // if search input value is not empty and only completed todos are displayed, 
+          //only search for todos marked as completed
+          ? todoList.map(item => {
+              if (item.title.indexOf(searchValue) > -1 && item.isCompleted) {
+                return (
+                  <TodoItem
+                    key={item.id}
+                    item={item}
+                    onHandleCheckbox={this.onHandleCheckbox}
+                  />
+                );
+              }
+            })
+          : todoList.map(item => {
+              if (item.title.indexOf(searchValue) > -1) {
+                return (
+                  <TodoItem
+                    key={item.id}
+                    item={item}
+                    onHandleCheckbox={this.onHandleCheckbox}
+                  />
+                );
+              }
+            })}
+
         <TodoAddBox
           todoTitle={todoTitle}
           onChangeTitle={this.onChangeTitle}
