@@ -1,0 +1,8 @@
+input#todo {
+    position: absolute;
+    margin-left: 19px;
+    margin-top: 16px;
+}
+label.info {
+    margin-left: 34px;
+}

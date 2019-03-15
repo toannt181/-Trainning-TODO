@@ -1,6 +1,4 @@
-.App {
-  text-align: center;
-}
+
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -22,7 +20,11 @@
 .App-link {
   color: #61dafb;
 }
-
+.todoapp {
+  width: 390px;
+  background-color: #efece35e;
+  margin-left: 500px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
