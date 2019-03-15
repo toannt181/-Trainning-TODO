@@ -12,19 +12,19 @@ class App extends Component {
     SearchText : ''
    }
   }
-  getTextSearch = (dl) => {
+  getTextSearch = (data) => {
     this.setState ({
-      SearchText:dl
+      SearchText:data
     })
   }
   getNewTodo = (title,time) => {
     var item = {};
     item.title =title;
     item.time =time;
-    var items =this.state.data;// item là 1 object của data
+    var items =this.state.data;
     // console.log(item);
     items.push(item) ;
-    this.setState ({// xét lại todo khi đã thêm mới
+    this.setState ({
       data:items
     })
   }
@@ -41,7 +41,7 @@ class App extends Component {
       <div className="App">
             <div className="todoapp">
                 <Search 
-                getTextSearch = {(dl) => this.getTextSearch(dl)}
+                getTextSearch = {(data) => this.getTextSearch(data)}
                 />
                 <Todolist Dataprops={ketqua}/>
                 <AddNews Add = {(title,time) =>this.getNewTodo(title,time)}/>
